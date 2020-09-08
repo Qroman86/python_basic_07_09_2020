@@ -14,11 +14,11 @@ if not book_title:
 book_place_of_publication = input("Место издания:")
 book_page_counts = input("Количество страниц:")
 if not book_page_counts.isdigit():
-    warning_message = warning_message + "- введеное значение для количества страниц не является целым числом\n"
+    warning_message = warning_message + "- введеное значение для количества страниц не является целым положительным числом\n"
 else:
     book_page_counts = int(book_page_counts)
     if book_page_counts <= 0:
-        warning_message = warning_message + "- введеное значение для количества страниц не является положительным числом\n"
+        warning_message = warning_message + "- введеное значение для количества страниц не является целым положительным числом\n"
 
 book_year_of_publication = input("Год издания:")
 if not book_year_of_publication.isdigit():
