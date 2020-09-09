@@ -5,7 +5,7 @@ if not number_n_as_str.isdigit():
 else:
     number_n = int(number_n_as_str)
     number_nn_as_str = "{}{}".format(number_n_as_str, number_n_as_str)
-    number_nnn_as_str = "{}{}".format(number_nn_as_str,number_n_as_str)
+    number_nnn_as_str = "{}{}{}".format(number_n_as_str, number_n_as_str, number_n_as_str)
 
     number_nn = int(number_nn_as_str)
     number_nnn = int(number_nnn_as_str)
