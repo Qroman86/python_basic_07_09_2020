@@ -9,10 +9,15 @@
 Необходимо использовать написанную ранее функцию int_func().
 """
 
-def int_func(word):
+def int_func(word: str):
+    """
+    Make word as title (uppercase first letter)
+    :param word: input word
+    :return: result
+    """
     uppercase_map = {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D', 'e': 'E', 'f': 'F', 'h': 'H', 'i': 'I', 'j': 'J'}
     uppercase_map.update({ 'k': 'K', 'l': 'L', 'm': 'M', 'n': 'N', 'o': 'O'})
-    uppercase_map.update({'p': 'P', 'q': 'Q', 'r': 'R', 's': 'S', 't': 'T', 'u': 'U', 'v': 'V', 'w': 'W', 'x': 'X', 'y': 'Y', 'z': 'Z' })
+    uppercase_map.update({'p': 'P', 'q': 'Q', 'r': 'R', 's': 'S', 't': 'T', 'u': 'U', 'v': 'V', 'w': 'W', 'x': 'X', 'y': 'Y', 'z': 'Z'})
 
     if not isinstance(word, str):
         print("Введенное значение пусто или не является строкой")
@@ -34,6 +39,11 @@ def int_func(word):
     return word
 
 def ask_words(input_value):
+    """
+    Print all word in string as title in one string
+    :param input_value: input string
+    :return: result string
+    """
     if not isinstance(input_value, str):
         print("Введенное значение не является строкой")
         return

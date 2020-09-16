@@ -9,6 +9,11 @@
 '''
 
 def sum_up(input_list):
+    """
+    calculate sum of list of numbers
+    :param input_list: list of numbers
+    :return: sum of numbers
+    """
     is_stop = False
     sum = 0
     for input_item in input_list:
@@ -23,6 +28,11 @@ def sum_up(input_list):
     return is_stop, sum
 
 def ask_numbers(input_str):
+    """
+    Ask numbers from user
+    :param input_str: ask sentence
+    :return: None
+    """
     total_sum = 0
     while True:
         input_numbers_str = input(input_str)
