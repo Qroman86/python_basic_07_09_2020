@@ -8,7 +8,13 @@
 """
 
 def ask_number(input_str: str, is_real: bool, is_positive: bool):
-
+    """
+    Ask number from user
+    :param input_str: ask sentence
+    :param is_real: is input number should be real
+    :param is_positive: is input number should be greater than zero
+    :return: value of user number
+    """
     is_positive_str = "положительным" if is_positive else "отрицательным"
     is_real_str = "действительным" if is_real else "целым"
     message_str = f"Введенное значение должно быть {is_real_str} {is_positive_str} числом"
@@ -34,10 +40,22 @@ y = ask_number("\nВведите целое отрицательное числ�
 
 #Первый способ
 def my_func1(x: float, y: int):
+    """
+    Calculate power x**y using '**'
+    :param x: x-value
+    :param y: y-value
+    :return: power value
+    """
     return x**y
 
 #Второй способ
 def my_func2(x: float, y: int):
+    """
+        Calculate power x**y using 'while'
+        :param x: x-value
+        :param y: y-value
+        :return: power value
+        """
     result = 1.0
     while y < 0:
         result /= x

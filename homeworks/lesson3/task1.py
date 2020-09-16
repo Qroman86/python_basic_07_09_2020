@@ -5,6 +5,11 @@
 
 
 def ask_number(input_str):
+    """
+    Ask number from user
+    :param input_str: ask sentence
+    :return: float number
+    """
     while True:
         input_number = input(input_str)
         try:
@@ -16,6 +21,12 @@ def ask_number(input_str):
 
 
 def divide(dividend, divider):
+    """
+    Calculate division
+    :param dividend: float value of dividend
+    :param divider: float value of divider
+    :return: float result of division
+    """
     try:
         div_result = dividend / divider;
         return div_result

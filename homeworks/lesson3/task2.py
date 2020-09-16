@@ -6,6 +6,12 @@
 """
 
 def ask_parameter(input_str, user_parameters):
+    """
+    Ask parameter from user
+    :param input_str: str ask sentense
+    :param user_parameters: dictionary with user parameters description
+    :return: user parameter value (different types)
+    """
     while True:
         input_parameter = input(input_str+":\n")
         try:
@@ -17,6 +23,16 @@ def ask_parameter(input_str, user_parameters):
 
 
 def print_user_data(name, surname, year_birth, city_of_residence, email, phone):
+    """
+    Print user data
+    :param name: user name
+    :param surname: user surname
+    :param year_birth: user year of birth
+    :param city_of_residence: user city of residencs
+    :param email: user email
+    :param phone: user phone
+    :return: str user data in one string
+    """
     print_info = f"Имя: {name} "
     print_info += f"Фамилия: {surname} "
     print_info += f"Год рождения: {year_birth} "
