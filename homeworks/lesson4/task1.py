@@ -5,10 +5,24 @@
 """
 from sys import argv
 
-def calc_salary(production_in_hours: float, rate_per_hour: float, premium: float):
+
+def calc_salary(production_in_hours: float, rate_per_hour: float, premium: float) -> float:
+    """
+    Расчет заработной платы
+    :param production_in_hours: выработка в часах
+    :param rate_per_hour: ставка в час
+    :param premium: размер премии
+    :return: размер вычисленной заработной платы
+    """
     return production_in_hours*rate_per_hour + premium
 
+
 def check_float(input_value):
+    """
+     Проверка является ли введенной значение числом (в случае успеха преобразовать в float)
+    :param input_value: входящее значение
+    :return: check - True/False (число/нечисло), output_value - преобразованное число (в случае неуспеха None)
+    """
     check = False
     output_value = None
     try:
@@ -19,22 +33,36 @@ def check_float(input_value):
     return check, output_value
 
 
-_, production_in_hours, rate_per_hour, premium = argv
+def define_salary():
+    """
+        Реализация логики считывания информации из параметров и
+        расчет заработной платы.
+        Осуществляется проверка на соответствие неотрицитальному значению для
+        указанных пользователем выработки в часах, ставки в час и размера премии
+    :return: None
+    """
+    _, production_in_hours, rate_per_hour, premium = argv
 
-assert calc_salary(10, 10, 10) == 110, "Неверный расчет зарплаты"
+    assert calc_salary(10, 10, 10) == 110, "Неверный расчет зарплаты"
 
-check_as_float, production_in_hours = check_float(production_in_hours)
-assert  check_as_float, "Значение заработной платы должны быть неотрицательным числом"
-assert  production_in_hours >= 0, "Значение заработной платы должны быть неотрицательным числом"
+    check_as_float, production_in_hours = check_float(production_in_hours)
+    if not check_as_float or production_in_hours < 0:
+        print("Расчет зарплаты не выполнен! Значение заработной платы должны быть неотрицательным числом")
+        return
 
-check_as_float, rate_per_hour = check_float(rate_per_hour)
-assert  check_as_float, "Значение ставки в час должно быть неотрицательным числом"
-assert  rate_per_hour >= 0, "Значение ставки в час должно быть неотрицательным числом"
+    check_as_float, rate_per_hour = check_float(rate_per_hour)
+    if not check_as_float or rate_per_hour < 0:
+        print("Расчет зарплаты не выполнен! Значение ставки в час должно быть неотрицательным числом")
+        return
 
-check_as_float, premium = check_float(premium)
-assert  check_as_float, "Значение премии должно быть неотрицательным числом"
-assert  premium >= 0, "Значение премии должно быть неотрицательным числом"
+    check_as_float, premium = check_float(premium)
+    if not check_as_float or premium < 0:
+        print("Расчет зарплаты не выполнен! Значение премии должно быть неотрицательным числом")
+        return
 
-salary = calc_salary(production_in_hours, rate_per_hour, premium)
+    salary = calc_salary(production_in_hours, rate_per_hour, premium)
 
-print(f"Размер заработной платы равен {salary}")
+    print(f"Размер заработной платы равен {salary}")
+
+
+define_salary()
