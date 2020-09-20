@@ -10,6 +10,11 @@ from typing import List
 
 
 def non_repeat_list(input_list: List) -> List:
+    """
+    Функция возвращающая неповторяющиеся элементы списка в том же порядке
+    :param input_list: входной список
+    :return: выходной список
+    """
     output_list = [x for x in input_list if input_list.count(x) == 1]
     return output_list
 
