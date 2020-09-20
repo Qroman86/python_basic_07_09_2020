@@ -38,7 +38,7 @@ for el in count(start_value):
     print(el)
 
 input_list = input('Введите строку, состоящую из элементов, разделенных проблеом:\n').split(' ')
-cycle_number = read_not_negative_int("Введите целое неотрицательное число циклов повторений")
+cycle_number = read_not_negative_int("Введите целое неотрицательное число циклов повторений:\n")
 cycle_size = len(input_list)
 iter_count_max = cycle_size * cycle_number
 iter_counter = 0
