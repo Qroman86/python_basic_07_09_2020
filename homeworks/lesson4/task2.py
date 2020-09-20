@@ -7,7 +7,11 @@
 from typing import List
 
 
-def read_numbers():
+def read_numbers() -> List:
+    """
+    Считывает список чисел
+    :return: считанный список чисел
+    """
     while True:
         input_list = input('Введите числа, разделенные запятой:\n').split(',')
         numbers_list = []

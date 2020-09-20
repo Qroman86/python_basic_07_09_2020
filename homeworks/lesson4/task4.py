@@ -9,6 +9,28 @@
 from typing import List
 
 
+def read_numbers() -> List:
+    """
+    Считывает список чисел
+    :return: считанный список чисел
+    """
+    while True:
+        input_list = input('Введите числа, разделенные запятой:\n').split(',')
+        numbers_list = []
+        is_input_correct = True
+        for item in input_list:
+            try:
+                numbers_list.append(float(item))
+            except ValueError:
+                print('Введенная строка включает нечисла')
+                is_input_correct = False
+                break
+        if not is_input_correct:
+            continue
+
+        return numbers_list
+
+
 def non_repeat_list(input_list: List) -> List:
     """
     Функция возвращающая неповторяющиеся элементы списка в том же порядке
@@ -21,5 +43,5 @@ def non_repeat_list(input_list: List) -> List:
 
 assert non_repeat_list([2, 2, 2, 7, 23, 1, 44, 44, 3, 2, 10, 7, 4, 11]) == [23, 1, 3, 10, 4, 11], "Функция non_repeat_list работает неверно"
 
-example_list = [35, 35, 2, 1, 2, 1, 3, 4, 7, 9, 7, 5, 124, 33, 8, 8]
+example_list = read_numbers()
 print(f"Для списка {example_list} результат работы функции non_repeat_list будет следующим:\n{non_repeat_list(example_list)}")
