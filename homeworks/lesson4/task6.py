@@ -11,7 +11,12 @@
 from itertools import count, cycle
 
 
-def read_int(input_str: str):
+def read_int(input_str: str) -> int:
+    """
+    Считать целое число у пользователя
+    :param input_str: строка с текстом запроса
+    :return: целое число
+    """
     while True:
         input_value = input(input_str)
         try:
@@ -21,7 +26,13 @@ def read_int(input_str: str):
             print('Введенное значение не является целым числом')
             continue
 
-def read_not_negative_int(input_str: str):
+
+def read_not_negative_int(input_str: str) -> int:
+    """
+    Считать целое неотрицательное число у пользователя
+    :param input_str: строка с текстом запроса
+    :return: целое неотрицательное число
+    """
     while True:
         int_value = read_int(input_str)
         if int_value < 0:

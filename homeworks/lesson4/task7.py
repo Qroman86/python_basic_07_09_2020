@@ -7,7 +7,11 @@
 """
 
 
-def read_not_negative_int():
+def read_not_negative_int() -> int:
+    """
+    Считать целое неотрицательное число у пользователя
+    :return: целое неотрицательное число
+    """
     while True:
         input_value = input("Введите целое положительное значение n:\n")
         try:
@@ -21,7 +25,12 @@ def read_not_negative_int():
             continue
 
 
-def fact(n: int):
+def fact(n: int) -> int:
+    """
+    Вычисляет значение n! в "ленивом" режиме
+    :param n: значение числа n
+    :return:
+    """
     current_fact = 1
     for x in range(1, n+1):
         current_fact = current_fact * x

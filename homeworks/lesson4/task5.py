@@ -7,7 +7,13 @@
 from functools import reduce
 
 
-def even_mul(start_val: int, stop_val: int):
+def even_mul(start_val: int, stop_val: int) -> int:
+    """
+    Вычисляет произведение всех четных чисел в указанном диапазон
+    :param start_val: стартовое значение
+    :param stop_val: стоп-значение
+    :return: результат вычисления произведения
+    """
     return reduce(lambda x,y: x*y, [z for z in range(start_val, stop_val) if not z & 1])
 
 
