@@ -5,6 +5,10 @@ from typing import List
 
 
 def read_lines_from_user() -> List:
+    """
+    Считать данные пользователя построчно
+    :return: список введенных строк, за исключением последней пустой строки
+    """
     str_list = []
     print("Вводите построчно строки, по окончанию введите пустую строку:")
     while True:
@@ -16,10 +20,16 @@ def read_lines_from_user() -> List:
 
 
 def write_to_file(file_name: str, str_list: List):
+    """
+    Записать строки в файл
+    :param file_name: имя файла
+    :param str_list: список строк для записи
+    :return:
+    """
     if not file_name:
         raise ValueError("Передано пустое значение имени файла")
     try:
-        with open(file_name, "w") as f_obj:
+        with open(file_name, "w", encoding="UTF-8") as f_obj:
             f_obj.writelines("%s\n" % line for line in str_list)
     except IOError:
         raise IOError(f"Ошибка ввода-вывода в файл {file_name}!")
