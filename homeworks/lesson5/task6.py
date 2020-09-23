@@ -12,7 +12,7 @@
 Пример словаря:
 {“Информатика”: 170, “Физика”: 40, “Физкультура”: 30}
 """
-from typing import List
+from typing import List, Dict
 
 
 def read_data_from_file(file_name: str) -> List:
@@ -32,6 +32,66 @@ def read_data_from_file(file_name: str) -> List:
     return str_raws
 
 
-if __name__ == '__main__':
-    str_data_list = read_data_from_file("task6.txt")
+def count_hours_from(input_str: str) -> float:
+    """
+    Подсчитать общее число часов
+    :param input_str: строка с записью чисео
+    :return: значение общего числа часов
+    """
+    total_sum = 0.0
+    number = ""
+    is_digit = False
+    for symbol in input_str:
+        if symbol.isdigit():
+            is_digit = True
+            number += symbol
+        else:
+            if is_digit:
+                try:
+                    total_sum += float(number)
+                except ValueError:
+                    raise ValueError("Неправильный формат строки")
+            number = ""
+            is_digit = False
+    return total_sum
 
+
+def read_data_from_str(input_str: str):
+    """
+    Подготовить данные из строки в формате Предмет:строка_с_данными_о_часах
+    :param input_str: входная строка
+    :return: Название предмета, Общее количество часов
+    """
+    split_str = input_str.split(":")
+    if len(split_str) != 2:
+        raise ValueError("Строка не соответствует формату")
+    return split_str[0], count_hours_from(split_str[1])
+
+
+def prepare_subject_dict(str_data_list: List) -> Dict:
+    """
+    Формирует словарь с данными по предметам на основе введеного списка строк
+    :param str_data_list: исходный список строк
+    :return: словарь с данными по предметам
+    """
+    subject_dict = {}
+    for raw in str_data_list:
+        subject, total_hours_count = read_data_from_str(raw)
+        subject_dict.update({subject: total_hours_count})
+    return subject_dict
+
+
+if __name__ == '__main__':
+    str_data_list = []
+    try:
+        str_data_list = read_data_from_file("task6.txt")
+    except IOError:
+        print("Ошибка чтения из файла")
+    except ValueError:
+        print("Ошибка чтения из файла")
+
+    try:
+        subject_dict = prepare_subject_dict(str_data_list)
+    except ValueError:
+        print("Ошибка при формировании словаря")
+    print(f"Информация по общему количеству часов в разрезе по предметам:\n{subject_dict}")
