@@ -83,8 +83,15 @@ if __name__ == '__main__':
     float_list_as_str = read_numbers_from_user()
     float_list_str = " ".join(float_list_as_str)
     file_name = "task5.txt"
-    write_to_file(file_name, [float_list_str])
-    number_list = read_data_from_file(file_name)
+    number_list = []
+    try:
+        write_to_file(file_name, [float_list_str])
+        number_list = read_data_from_file(file_name)
+    except IOError:
+        print(f"Ошибка чтения/записи для файла {file_name}")
+    except ValueError:
+        print(f"Ошибка чтения/записи для файла {file_name}")
+
     if(len(number_list) > 0):
         #считываем из первой строки
         try:
