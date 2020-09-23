@@ -81,7 +81,7 @@ def print_employee_data_from_file(file_name: str):
         print(employee)
 
     average_salary = calc_average_salary(employee_list)
-    print(f"\nСредняя велична дохода сотрудников равна {average_salary}")
+    print(f"\nСредняя величина дохода сотрудников равна {average_salary}")
 
 
 if __name__ == '__main__':
