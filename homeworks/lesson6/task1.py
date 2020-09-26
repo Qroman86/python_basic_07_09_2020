@@ -22,11 +22,22 @@ class TrafficLight:
     __color = OFF
 
     def change_color(self, new_color: str, time_value: int):
+        """
+        Поменять режим светофора на указанный цвет на указанную продолжительность
+        :param new_color: цвет нового состояния
+        :param time_value: продолжительность нового состояния
+        :return:
+        """
         __color = new_color
         print(f"Traffic light color is {__color}")
         time.sleep(time_value)
 
     def running(self):
+        """
+        Запуск переключения светофора в режимы: красный, желтый, зеленый
+        (по окончанию выставить цвет "Off", что соответствует выключенному светофору)
+        :return:
+        """
         self.change_color(self.RED, 7)
         self.change_color(self.YELLOW, 2)
         self.change_color(self.GREEN, 5)
