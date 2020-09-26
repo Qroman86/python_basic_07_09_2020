@@ -34,6 +34,5 @@ class TrafficLight:
 
 
 if __name__ == '__main__':
-
     traffic_ligth = TrafficLight()
     traffic_ligth.running()
