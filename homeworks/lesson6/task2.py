@@ -8,12 +8,12 @@
 """
 
 class Road:
-    __length = 0.0
-    __width = 0.0
+    _length = 0.0
+    _width = 0.0
 
     def __init__(self, length: float, width: float):
-        self.__length = length
-        self.__width = width
+        self._length = length
+        self._width = width
 
 
     def calc_total_weight(self, weight_per_one_sq_meter: float, road_bed_thickness: float) -> float:
@@ -23,7 +23,7 @@ class Road:
         :param road_bed_thickness: толщина полотна в см
         :return: суммарный вес полотна дороги в т
         """
-        total_weght = self.__length * self.__width * weight_per_one_sq_meter * road_bed_thickness
+        total_weght = self._length * self._width * weight_per_one_sq_meter * road_bed_thickness
         total_weght /= 1000
         return total_weght
 
