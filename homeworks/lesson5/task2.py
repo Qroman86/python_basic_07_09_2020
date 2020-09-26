@@ -2,6 +2,7 @@
 2. Создать текстовый файл (не программно), сохранить в нем несколько строк,
 выполнить подсчет количества строк, количества слов в каждой строке.
 """
+import os
 from typing import List, Dict
 
 
@@ -56,7 +57,7 @@ def count_raws_from_file(file_name: str):
 
 if __name__ == '__main__':
     try:
-        file_name_value = "task2.txt"
-        count_raws_from_file(file_name_value)
+        file_path = os.path.join(os.path.dirname(__file__), 'task2.txt')
+        count_raws_from_file(file_path)
     except:
         print("\nВнимание! Во время выполнения программы произошла ошибка")

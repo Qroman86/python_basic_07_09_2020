@@ -8,6 +8,7 @@ Four — 4
 При этом английские числительные должны заменяться на русские.
 Новый блок строк должен записываться в новый текстовый файл.
 """
+import os
 from typing import List
 
 
@@ -73,8 +74,10 @@ def translate_from_en_to_ru_for_raws(str_list: List) -> List:
 
 if __name__ == '__main__':
     try:
-        str_raws = read_data_from_file("task4_in.txt")
+        file_path_in = os.path.join(os.path.dirname(__file__), 'task4_in.txt')
+        str_raws = read_data_from_file(file_path_in)
         str_raws = translate_from_en_to_ru_for_raws(str_raws)
-        write_to_file("task4_out.txt", str_raws)
+        file_path_out = os.path.join(os.path.dirname(__file__), 'task4_out.txt')
+        write_to_file(file_path_out, str_raws)
     except:
         print("\nВнимание! Во время выполнения программы произошла ошибка")

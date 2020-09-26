@@ -12,6 +12,7 @@
 Пример словаря:
 {“Информатика”: 170, “Физика”: 40, “Физкультура”: 30}
 """
+import os
 from typing import List, Dict
 
 
@@ -84,7 +85,8 @@ def prepare_subject_dict(str_data_list: List) -> Dict:
 if __name__ == '__main__':
     str_data_list = []
     try:
-        str_data_list = read_data_from_file("task6.txt")
+        file_name = os.path.join(os.path.dirname(__file__), 'task6.txt')
+        str_data_list = read_data_from_file(file_name)
     except IOError:
         print("Ошибка чтения из файла")
     except ValueError:

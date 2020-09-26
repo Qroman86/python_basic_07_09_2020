@@ -3,6 +3,7 @@
 записать в него программно набор чисел, разделенных пробелами.
 Программа должна подсчитывать сумму чисел в файле и выводить ее на экран.
 """
+import os
 from typing import List
 
 
@@ -82,7 +83,8 @@ def calculate_sum(input_str: str) -> float:
 if __name__ == '__main__':
     float_list_as_str = read_numbers_from_user()
     float_list_str = " ".join(float_list_as_str)
-    file_name = "task5.txt"
+    file_name = os.path.join(os.path.dirname(__file__), 'task5.txt')
+
     number_list = []
     try:
         write_to_file(file_name, [float_list_str])

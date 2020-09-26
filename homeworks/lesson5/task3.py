@@ -3,6 +3,7 @@
 Определить, кто из сотрудников имеет оклад менее 20 тыс., вывести фамилии этих сотрудников.
 Выполнить подсчет средней величины дохода сотрудников.
 """
+import os
 from typing import List
 
 
@@ -86,7 +87,7 @@ def print_employee_data_from_file(file_name: str):
 
 if __name__ == '__main__':
     try:
-        file_name_value = "task3.txt"
-        print_employee_data_from_file(file_name_value)
+        file_path = os.path.join(os.path.dirname(__file__), 'task3.txt')
+        print_employee_data_from_file(file_path)
     except:
         print("\nВнимание! Во время выполнения программы произошла ошибка")

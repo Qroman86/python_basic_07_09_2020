@@ -1,5 +1,6 @@
 from typing import List, Dict
 import json
+import os
 
 
 def read_data_from_file(file_name: str) -> List:
@@ -88,11 +89,13 @@ def convert_str_list_to_data_list(data_list: List) -> List:
 
 if __name__ == '__main__':
     try:
-        str_data_list = read_data_from_file("task7_in.txt")
+        file_path_in = os.path.join(os.path.dirname(__file__), 'task7_in.txt')
+        str_data_list = read_data_from_file(file_path_in)
         #prepare complex_dict
         data_list = convert_str_list_to_data_list(str_data_list)
         #write json to file
-        ser_json_to_file("task7_out.txt", data_list)
+        file_path_out = os.path.join(os.path.dirname(__file__), 'task7_out.txt')
+        ser_json_to_file(file_path_out, data_list)
     except IOError:
         print("Внимание! Во время выполнения программы произошла ошибка")
     except ValueError:

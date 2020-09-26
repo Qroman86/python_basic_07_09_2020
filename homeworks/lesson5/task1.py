@@ -1,6 +1,7 @@
 """1. Создать программно файл в текстовом формате,
 записать в него построчно данные, вводимые пользователем.
 Об окончании ввода данных свидетельствует пустая строка."""
+import os
 from typing import List
 
 
@@ -37,7 +38,7 @@ def write_to_file(file_name: str, str_list: List):
 
 if __name__ == '__main__':
     try:
-        file_name_value = input("Введите имя файла:\n")
-        write_to_file(file_name_value, read_lines_from_user())
+        file_path = os.path.join(os.path.dirname(__file__), 'task1.txt')
+        write_to_file(file_path, read_lines_from_user())
     except:
         print("\nВнимание! Во время выполнения программы произошла ошибка")
