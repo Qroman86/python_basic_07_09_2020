@@ -65,4 +65,3 @@ if __name__ == '__main__':
     print(f"\nМатрица m2:\n{m2}")
     m3 = m1 + m2
     print(f"\nМатрица m3:\n{m3}")
-    pass
