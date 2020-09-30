@@ -5,6 +5,7 @@ class Clothing(ABC):
     def __init__(self, *args):
         self._name = "Одежда"
 
+    @property
     @abstractmethod
     def fabric_consumption(self) -> float:
         pass
@@ -13,6 +14,7 @@ class Clothing(ABC):
     def name(self):
         return self._name
 
+
 class Coat(Clothing):
 
     def __init__(self, size: float, *args):
@@ -20,6 +22,7 @@ class Coat(Clothing):
         self._name = "Пальто"
         self.__size = size
 
+    @property
     def fabric_consumption(self) -> float:
         return self.size / 6.5 + 0.5
 
@@ -41,6 +44,7 @@ class Suit(Clothing):
         self._name = "Костюм"
         self.__growth = growth
 
+    @property
     def fabric_consumption(self) -> float:
         return 2 * self.growth + 0.3
 
@@ -57,14 +61,14 @@ class Suit(Clothing):
 if __name__ == '__main__':
     coat = Coat(3)
     print(coat.name)
-    print(coat.fabric_consumption())
+    print(coat.fabric_consumption)
 
     coat.size = 6.5
-    assert coat.fabric_consumption() == 1.5, "Неверный расчет для пальто"
+    assert coat.fabric_consumption == 1.5, "Неверный расчет для пальто"
 
     suit = Suit(4)
     print(suit.name)
-    print(suit.fabric_consumption())
+    print(suit.fabric_consumption)
 
     suit.growth = 1
-    assert suit.fabric_consumption() == 2.3, "Неверный расчет для костюма"
+    assert suit.fabric_consumption == 2.3, "Неверный расчет для костюма"
