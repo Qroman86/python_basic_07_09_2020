@@ -109,7 +109,7 @@ class Printer(OfficeEquipment):
                f"Цветность печати: {self.color_type}\n" \
                f"Скорость печати (кол-во страниц в минуту): {self.print_speed}\n" \
                f"Максимальное разрешение dpi: {self.max_resolution_dpi}\n" \
-               f"Технология печати: {self.print_tech}"
+               f"Технология печати: {self.print_tech}\n"
 
 
 class Scanner(OfficeEquipment):
@@ -142,8 +142,8 @@ class Scanner(OfficeEquipment):
                f"Модель: {self.model}\n" \
                f"Маскимальный формат: {self.max_format}\n" \
                f"Максимальное разрешение dpi: {self.max_resolution_dpi}\n" \
-               f"Отправка по email: {self.is_send_email}" \
-               f"Оттенки серого: {self.grey_shades}"
+               f"Отправка по email: {self.is_send_email}\n" \
+               f"Оттенки серого: {self.grey_shades}\n"
 
 
 class Copier(OfficeEquipment):
@@ -174,24 +174,74 @@ class Warehouse:
     def __init__(self):
         self.__items = []
         self.__inventory_number_counter = 0
+        self.__dict_item_location_by_number = {}
+
 
     @property
     def inventory_number_counter(self):
         return self.__inventory_number_counter
 
 
+    def receive_office_equipment(self, inventory_item: OfficeEquipment):
+        """
+            Принять оргтехнику на склад
+        """
+        #если оргтехника не имеет инвентарный номер необходимо добавить запись
+        if inventory_item.inventory_number < 1:
+            self.add_new_inventory_item(inventory_item)
+        else:
+            # Делаем запись, что оргтехника на складе
+            self.__dict_item_location_by_number.update({inventory_item.inventory_number: "Склад"})
+
+
+    def transfer_to_company_division(self, inventory_item: OfficeEquipment, division_name: str):
+        """
+            Передать оргтехнику подразделению
+        """
+        if not division_name:
+            raise ValueError("Не указано название подразделения")
+        if inventory_item.inventory_number not in self.__dict_item_location_by_number.keys():
+            raise ValueError(f"Указанный инвентарный номер {inventory_item.inventory_number} отсутствует в списке единиц учета оргтехники")
+        self.__dict_item_location_by_number.update({inventory_item.inventory_number: division_name})
+
     def add_new_inventory_item(self, inventory_item: OfficeEquipment):
+        """
+            Добавить информацию о новой единице оргтехнике хранения
+        """
         self.__inventory_number_counter += 1
         inventory_item.inventory_number = self.__inventory_number_counter
         inventory_item.warehouse = self
         self.__items.append(inventory_item)
+        self.__dict_item_location_by_number.update({inventory_item.inventory_number: "Склад"})
+
+    def prepare_print_data(self, inventory_item: OfficeEquipment) -> str:
+        return f"{'-'*18}\n {str(inventory_item)}Текущее место дислокации: {self.__dict_item_location_by_number.get(inventory_item.inventory_number)}"
 
     def __str__(self):
-        return f"\n{'*'*16}\nЕдиницы техники, приписанные к складу" + "\n".join(str(item) for item in self.__items)
+        return f"\n{'*'*16}\nЕдиницы техники, приписанные к складу" + "\n".join(self.prepare_print_data(item) for item in self.__items)
 
+
+class UserInterface:
+    @staticmethod
+    def transfer_to_division_by_vendor_model(warehouse: Warehouse, vendor: str, model: str, number: int):
+        """
+            Передать в указанное подразделение указанное количество оргтехники с указанием производителя и модели
+        """
+        pass
+
+    @staticmethod
+    def recieve_to_warehouse_by_inventory_id(warehouse: Warehouse, inventory_id: int):
+        """
+            Вернуть на склад по указанному номеру id
+        """
+        pass
+
+    @staticmethod
+    def
 
 if __name__  == '__main__':
     #task4
+    print("TASK #4")
     warehouse = Warehouse()
 
     printer1 = Printer("Canon", "12324344")
@@ -225,3 +275,41 @@ if __name__  == '__main__':
     print("Текущее максимальное значение инвентарного номера", warehouse.inventory_number_counter)
 
     print(warehouse)
+
+    #task5
+    print("\n\nTASK #5")
+    warehouse.transfer_to_company_division(printer1, "Бухгалтерия")
+    coppier2 = Copier("APPOLLO", "23394")
+    coppier2.max_format = "A3"
+    coppier2.copy_speed = 30
+    coppier2.max_resolution_dpi = "1200x1200 dpi"
+    warehouse.receive_office_equipment(coppier2)
+    print("\n\nУчет после передачи принтера в Бухгалтерию и приемки нового ксерокса:")
+    print(warehouse)
+    warehouse.receive_office_equipment(printer1)
+    print("\n\nУчет после возвращения принтера из Бухгалтерию на склад:")
+    print(warehouse)
+
+    # task6
+    print("\n\nTASK #6")
+    #Добавление информации о нескольких сканерах одной модели
+    scanner2 = Scanner("JWS", "32374834")
+    scanner2.max_format = "A3"
+    scanner2.is_send_email = True
+    scanner2.grey_shades = 256
+    scanner2.max_resolution_dpi = "1200x1200 dpi"
+    warehouse.receive_office_equipment(scanner2)
+
+    scanner3 = Scanner("JWS", "32374834")
+    scanner3.max_format = "A3"
+    scanner3.is_send_email = True
+    scanner3.grey_shades = 256
+    scanner3.max_resolution_dpi = "1200x1200 dpi"
+    warehouse.receive_office_equipment(scanner3)
+
+    scanner4 = Scanner("JWS", "32374834")
+    scanner4.max_format = "A3"
+    scanner4.is_send_email = True
+    scanner4.grey_shades = 256
+    scanner4.max_resolution_dpi = "1200x1200 dpi"
+    warehouse.receive_office_equipment(scanner4)
