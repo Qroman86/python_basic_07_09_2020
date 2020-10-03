@@ -178,6 +178,9 @@ class Warehouse:
 
 
     def check_is_number_in_warehouse(self, number: int):
+        """
+        Проверить содержить ли указанный инвентаррный номер в списке номеров хранилища склада
+        """
         return number in self.__dict_item_location_by_number.keys()
 
     @property
@@ -202,6 +205,9 @@ class Warehouse:
         self.receive_office_equipment_by_number(inventory_item.inventory_number)
 
     def transfer_to_company_division_by_number(self, inventory_number: int, division_name: str):
+        """
+        Передать единицу оргтехники со склада в указанное подразделение по инвентарному номеру
+        """
         if not division_name:
             raise ValueError("Не указано название подразделения")
         if inventory_number not in self.__dict_item_location_by_number.keys():
@@ -226,6 +232,9 @@ class Warehouse:
         self.__dict_item_location_by_number.update({inventory_item.inventory_number: "Склад"})
 
     def prepare_print_data(self, inventory_item: OfficeEquipment) -> str:
+        """
+        Подготовить информацию по единице хранения к выводу на печать
+        """
         return f"{'-'*18}\n {str(inventory_item)}Текущее место дислокации: {self.__dict_item_location_by_number.get(inventory_item.inventory_number)}"
 
     def __str__(self):
@@ -262,6 +271,9 @@ class UserInterface:
 
     @staticmethod
     def convert_str_to_number_list(inv_list_str: str):
+        """
+        Конвертировать строку в список номеров
+        """
         inv_list_split = inv_list_str.split(' ')
         if len(inv_list_split) == 0:
             raise ValueError("Введенный список инвентарных номеров пуст")
@@ -275,22 +287,34 @@ class UserInterface:
 
     @staticmethod
     def check_number_for_warehouse(warehouse: Warehouse, number_list: List):
+        """
+        Проверить на наличие отсутствующих инвентарных номеров в предоставленном списке
+        """
         for number in number_list:
             if not warehouse.check_is_number_in_warehouse(number):
                 raise ValueError(f"В складском учете нет оргтехники с указанным номером {number}")
 
     @staticmethod
     def recieve_invetory_items(warehouse: Warehouse, number_list: List):
+        """
+        Вернуть на склад список оргтехники по инвернтарным номерам
+        """
         for number in number_list:
             warehouse.receive_office_equipment_by_number(number)
 
     @staticmethod
     def transfer_invetory_items(warehouse: Warehouse, number_list: List, division_name: str):
+        """
+        Передать со склада список оргтехники в указанное подразделение по инвентарным номерам
+        """
         for number in number_list:
             warehouse.transfer_to_company_division_by_number(number, division_name)
 
     @staticmethod
     def recieve(warehouse: Warehouse):
+        """
+        Выполнение команды 'recieve' - старт процесса возврата оргтехники на склад
+        """
         while True:
             inv_list_str = input(f"Для возврата на склад введите список инвентарных номеров единиц оргтехники, разделенных пробелом:\n")
             try:
@@ -304,6 +328,9 @@ class UserInterface:
 
     @staticmethod
     def transfer(warehouse: Warehouse):
+        """
+        Выполнение команды 'transfer' - старт процесса передачи оргтехники со склада в указанное подразделение
+        """
         while True:
             org_division_name = input(f"Введите наименование подразделения, куда следует передать оргтехнику:\n")
             if not org_division_name:
@@ -320,8 +347,12 @@ class UserInterface:
                 print(e)
                 continue
 
+
     @staticmethod
     def print_warehouse_data(warehouse: Warehouse):
+        """
+        Вывести информацию учета по складу
+        """
         print(warehouse)
 
     @staticmethod
