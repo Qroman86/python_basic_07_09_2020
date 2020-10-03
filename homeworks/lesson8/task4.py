@@ -14,7 +14,7 @@
 Подсказка: постарайтесь по возможности реализовать в проекте «Склад оргтехники» максимум возможностей,
  изученных на уроках по ООП.
 """
-
+from typing import List
 
 
 class OfficeEquipment:
@@ -103,6 +103,7 @@ class Printer(OfficeEquipment):
 
     def __str__(self):
         return f"\nИнвентарный номер: {self.inventory_number}\n" \
+               f"Тип оргтехники: Принтер\n" \
                f"Производитель: {self.vendor}\n" \
                f"Модель: {self.model}\n" \
                f"Маскимальный формат: {self.max_format}\n" \
@@ -115,9 +116,6 @@ class Printer(OfficeEquipment):
 class Scanner(OfficeEquipment):
     def __init__(self, vendor: str, model: str):
         super(Scanner, self).__init__(vendor, model)
-
-
-
 
 
     @property
@@ -138,6 +136,7 @@ class Scanner(OfficeEquipment):
 
     def __str__(self):
         return f"\nИнвентарный номер: {self.inventory_number}\n" \
+               f"Тип оргтехники: Сканер\n" \
                f"Производитель: {self.vendor}\n" \
                f"Модель: {self.model}\n" \
                f"Маскимальный формат: {self.max_format}\n" \
@@ -163,6 +162,7 @@ class Copier(OfficeEquipment):
 
     def __str__(self):
         return f"\nИнвентарный номер: {self.inventory_number}\n" \
+               f"Тип оргтехники: Ксерокс\n" \
                f"Производитель: {self.vendor}\n" \
                f"Модель: {self.model}\n" \
                f"Маскимальный формат: {self.max_format}\n" \
@@ -177,32 +177,43 @@ class Warehouse:
         self.__dict_item_location_by_number = {}
 
 
+    def check_is_number_in_warehouse(self, number: int):
+        return number in self.__dict_item_location_by_number.keys()
+
     @property
     def inventory_number_counter(self):
         return self.__inventory_number_counter
 
+    def receive_office_equipment_by_number(self, inventory_number: int):
+        """
+            Принять единицу оргтехники по инвентарному номеру
+        """
+        if not self.check_is_number_in_warehouse(inventory_number):
+            raise ValueError(f"Номер {inventory_number} не включен в складской список")
+        self.__dict_item_location_by_number.update({inventory_number: "Склад"})
 
     def receive_office_equipment(self, inventory_item: OfficeEquipment):
         """
             Принять оргтехнику на склад
         """
-        #если оргтехника не имеет инвентарный номер необходимо добавить запись
         if inventory_item.inventory_number < 1:
             self.add_new_inventory_item(inventory_item)
-        else:
-            # Делаем запись, что оргтехника на складе
-            self.__dict_item_location_by_number.update({inventory_item.inventory_number: "Склад"})
+        #если оргтехника не имеет инвентарный номер необходимо добавить запись
+        self.receive_office_equipment_by_number(inventory_item.inventory_number)
 
+    def transfer_to_company_division_by_number(self, inventory_number: int, division_name: str):
+        if not division_name:
+            raise ValueError("Не указано название подразделения")
+        if inventory_number not in self.__dict_item_location_by_number.keys():
+            raise ValueError(
+                f"Указанный инвентарный номер {inventory_number} отсутствует в списке единиц учета оргтехники")
+        self.__dict_item_location_by_number.update({inventory_number: division_name})
 
     def transfer_to_company_division(self, inventory_item: OfficeEquipment, division_name: str):
         """
             Передать оргтехнику подразделению
         """
-        if not division_name:
-            raise ValueError("Не указано название подразделения")
-        if inventory_item.inventory_number not in self.__dict_item_location_by_number.keys():
-            raise ValueError(f"Указанный инвентарный номер {inventory_item.inventory_number} отсутствует в списке единиц учета оргтехники")
-        self.__dict_item_location_by_number.update({inventory_item.inventory_number: division_name})
+        self.transfer_to_company_division_by_number(inventory_item.inventory_number, division_name)
 
     def add_new_inventory_item(self, inventory_item: OfficeEquipment):
         """
@@ -236,7 +247,103 @@ class UserInterface:
         """
         pass
 
+    @staticmethod
+    def print_commands_info():
+        """
+        Вывести список команд
+        """
+        commands_info = "\nСписок команд:\n" \
+                        "help - вывести список команд\n" \
+                        "exit - выйти из программы\n" \
+                        "print - вывести информацию учета по складу\n" \
+                        "recieve - принять на склад технику\n" \
+                        "transfer - передать в подразделение\n"
+        print(commands_info)
 
+    @staticmethod
+    def convert_str_to_number_list(inv_list_str: str):
+        inv_list_split = inv_list_str.split(' ')
+        if len(inv_list_split) == 0:
+            raise ValueError("Введенный список инвентарных номеров пуст")
+        number_list = []
+        for inv_item in inv_list_split:
+            try:
+                number_list.append(int(inv_item))
+            except ValueError:
+                raise ValueError(f"Введенный список инвентарных номеров содержит {inv_item} нечисло или число не явлющимся целым положительным числом")
+        return number_list
+
+    @staticmethod
+    def check_number_for_warehouse(warehouse: Warehouse, number_list: List):
+        for number in number_list:
+            if not warehouse.check_is_number_in_warehouse(number):
+                raise ValueError(f"В складском учете нет оргтехники с указанным номером {number}")
+
+    @staticmethod
+    def recieve_invetory_items(warehouse: Warehouse, number_list: List):
+        for number in number_list:
+            warehouse.receive_office_equipment_by_number(number)
+
+    @staticmethod
+    def transfer_invetory_items(warehouse: Warehouse, number_list: List, division_name: str):
+        for number in number_list:
+            warehouse.transfer_to_company_division_by_number(number, division_name)
+
+    @staticmethod
+    def recieve(warehouse: Warehouse):
+        while True:
+            inv_list_str = input(f"Для возврата на склад введите список инвентарных номеров единиц оргтехники, разделенных пробелом:\n")
+            try:
+                number_list = UserInterface.convert_str_to_number_list(inv_list_str)
+                UserInterface.check_number_for_warehouse(warehouse, number_list)
+                UserInterface.recieve_invetory_items(warehouse, number_list)
+                break
+            except ValueError as e:
+                print(e)
+                continue
+
+    @staticmethod
+    def transfer(warehouse: Warehouse):
+        while True:
+            org_division_name = input(f"Введите наименование подразделения, куда следует передать оргтехнику:\n")
+            if not org_division_name:
+                print("Название подразделения не должно быть пустым")
+                continue
+
+            inv_list_str = input(f"Для передачи со склада введите список инвентарных номеров единиц оргтехники, разделенных пробелом:\n")
+            try:
+                number_list = UserInterface.convert_str_to_number_list(inv_list_str)
+                UserInterface.check_number_for_warehouse(warehouse, number_list)
+                UserInterface.transfer_invetory_items(warehouse, number_list, org_division_name)
+                break
+            except ValueError as e:
+                print(e)
+                continue
+
+    @staticmethod
+    def print_warehouse_data(warehouse: Warehouse):
+        print(warehouse)
+
+    @staticmethod
+    def main_process(warehouse: Warehouse):
+        """
+        Основной процесс работы с пользовательской строкой
+        """
+        while True:
+            command = input("Система складского учета. Введите команду (exit - выход, help - список команд):\n")
+            if command == 'exit':
+                break
+            elif command == 'help':
+                UserInterface.print_commands_info()
+            elif command == 'print':
+                UserInterface.print_warehouse_data(warehouse)
+            elif command == 'recieve':
+                UserInterface.recieve(warehouse)
+            elif command == 'transfer':
+                UserInterface.transfer(warehouse)
+            else:
+                print("Введенная команда не поддерживается")
+                UserInterface.print_commands_info()
 
 if __name__  == '__main__':
     #task4
@@ -312,3 +419,5 @@ if __name__  == '__main__':
     scanner4.grey_shades = 256
     scanner4.max_resolution_dpi = "1200x1200 dpi"
     warehouse.receive_office_equipment(scanner4)
+
+    UserInterface.main_process(warehouse)
