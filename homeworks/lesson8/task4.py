@@ -236,8 +236,7 @@ class UserInterface:
         """
         pass
 
-    @staticmethod
-    def
+
 
 if __name__  == '__main__':
     #task4
